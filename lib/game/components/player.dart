@@ -1,87 +1,88 @@
 import 'package:flame/components.dart';
-import 'package:flame/input.dart';
+import 'package:flame/geometry.dart';
 import 'package:flame/sprite.dart';
+import 'package:testLast-platformer-07/game_objects/obstacle.dart';
+import 'package:testLast-platformer-07/game_objects/collectable.dart';
 
 /// The player character in the platformer game.
-class Player extends SpriteAnimationComponent with KeyboardEvents, CollisionCallbacks {
-  /// The player's current horizontal velocity.
-  double velocityX = 0;
+class Player extends SpriteAnimationComponent with HasHitboxes, Collidable {
+  static const double _maxHealth = 100.0;
+  static const double _invulnerabilityDuration = 1.0; // in seconds
 
-  /// The player's current vertical velocity.
-  double velocityY = 0;
+  double _health = _maxHealth;
+  double _invulnerabilityTimer = 0.0;
+  bool _isInvulnerable = false;
 
-  /// The player's maximum horizontal speed.
-  double maxHorizontalSpeed = 200;
-
-  /// The player's jump force.
-  double jumpForce = -500;
-
-  /// The player's current health.
-  int health = 3;
-
-  /// The player's current score.
-  int score = 0;
-
+  /// Creates a new instance of the Player component.
   Player({
     required Vector2 position,
     required SpriteAnimation idleAnimation,
-    required SpriteAnimation walkingAnimation,
-    required SpriteAnimation jumpingAnimation,
+    required SpriteAnimation runAnimation,
+    required SpriteAnimation jumpAnimation,
+    required SpriteAnimation hurtAnimation,
   }) : super(
           position: position,
-          size: Vector2.all(50),
+          size: Vector2.all(32.0),
           animation: idleAnimation,
-        );
-
-  @override
-  void onMount() {
-    super.onMount();
-    // Add collision detection
-    addCollisionBoxComponent();
+        ) {
+    addHitbox(HitboxCircle(radius: 12.0));
   }
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    // Apply horizontal movement
-    velocityX = 0;
-    if (isPressed(LogicalKeyboardKey.arrowLeft)) {
-      velocityX = -maxHorizontalSpeed;
-    } else if (isPressed(LogicalKeyboardKey.arrowRight)) {
-      velocityX = maxHorizontalSpeed;
+    if (_isInvulnerable) {
+      _invulnerabilityTimer -= dt;
+      if (_invulnerabilityTimer <= 0.0) {
+        _isInvulnerable = false;
+      }
     }
-    x += velocityX * dt;
+  }
 
-    // Apply gravity and jumping
-    velocityY += 1000 * dt;
-    if (isPressed(LogicalKeyboardKey.space) && velocityY >= 0) {
-      velocityY = jumpForce;
-    }
-    y += velocityY * dt;
-
-    // Update animation based on player state
-    if (velocityX != 0) {
-      animation = walkingAnimation;
-    } else if (velocityY != 0) {
-      animation = jumpingAnimation;
+  /// Handles player movement based on user input.
+  void move(Vector2 direction) {
+    if (direction.x > 0) {
+      animation = runAnimation;
+      flipHorizontally();
+    } else if (direction.x < 0) {
+      animation = runAnimation;
+      flipHorizontally(shouldFlip: false);
     } else {
       animation = idleAnimation;
     }
+
+    position.add(direction * 200 * dt);
   }
 
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-    // Handle collisions with other game objects
-    if (other is Obstacle) {
-      // Reduce player health or handle other collision logic
-      health--;
+  /// Handles player jumping.
+  void jump() {
+    animation = jumpAnimation;
+    velocity.y = -500;
+  }
+
+  /// Handles player taking damage.
+  void takeDamage(double amount) {
+    if (!_isInvulnerable) {
+      _health -= amount;
+      _isInvulnerable = true;
+      _invulnerabilityTimer = _invulnerabilityDuration;
+      animation = hurtAnimation;
     }
   }
 
-  /// Increase the player's score by the given amount.
-  void increaseScore(int amount) {
-    score += amount;
+  /// Checks if the player is dead.
+  bool get isDead => _health <= 0;
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
+    super.onCollision(intersectionPoints, other);
+
+    if (other is Obstacle) {
+      // Handle collision with obstacles
+    } else if (other is Collectable) {
+      // Handle collision with collectibles
+      other.collect();
+    }
   }
 }

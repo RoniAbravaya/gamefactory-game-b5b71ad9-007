@@ -1,41 +1,50 @@
 import 'package:flame/components.dart';
-import 'package:flame/sprite.dart';
+import 'package:flame/collisions.dart';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 
-/// A collectible item component for a platformer game.
-class Collectible extends SpriteComponent with CollisionCallbacks {
-  final int scoreValue;
-  final AudioPlayer _audioPlayer;
-
-  late final Animation<SpriteAnimation> _animation;
+class Collectible extends PositionComponent with CollisionCallbacks {
+  final int value;
+  double _floatOffset = 0;
 
   Collectible({
     required Vector2 position,
-    required this.scoreValue,
-    required Sprite sprite,
-    required this.size,
-    required AudioPlayer audioPlayer,
-  })  : _audioPlayer = audioPlayer,
-        super(position: position, size: size) {
-    _animation = SpriteAnimation.spriteList([sprite], stepTime: 0.2, loop: true);
-  }
+    this.value = 10,
+  }) : super(
+          position: position,
+          size: Vector2(30, 30),
+          anchor: Anchor.center,
+        );
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    animation = _animation;
+    add(CircleHitbox());
   }
 
   @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-    _collectItem();
+  void update(double dt) {
+    super.update(dt);
+    
+    position.y += 80 * dt;
+    
+    _floatOffset += dt * 5;
+    position.x += (0.5 * ((_floatOffset % 2) < 1 ? 1 : -1));
+    
+    if (position.y > 900) {
+      removeFromParent();
+    }
   }
 
-  void _collectItem() {
-    // Trigger score update, audio, and remove the collectible
-    _audioPlayer.play();
+  @override
+  void render(Canvas canvas) {
+    canvas.drawCircle(
+      Offset(size.x / 2, size.y / 2),
+      size.x / 2,
+      Paint()..color = Colors.amber,
+    );
+  }
+
+  void collect() {
     removeFromParent();
   }
 }
