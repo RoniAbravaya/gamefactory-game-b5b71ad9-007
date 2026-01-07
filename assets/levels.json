@@ -1,0 +1,184 @@
+{
+  "levels": [
+    {
+      "level_number": 1,
+      "name": "Tutorial",
+      "is_free": true,
+      "unlock_requirement": "none",
+      "difficulty": 0.0,
+      "time_limit_seconds": null,
+      "target_score": 100,
+      "obstacles": {
+        "count": 5,
+        "speed": 1.15
+      },
+      "collectibles": {
+        "count": 12,
+        "value": 10
+      },
+      "background_theme": "meadow"
+    },
+    {
+      "level_number": 2,
+      "name": "Level 2",
+      "is_free": true,
+      "unlock_requirement": "none",
+      "difficulty": 0.11,
+      "time_limit_seconds": null,
+      "target_score": 200,
+      "obstacles": {
+        "count": 7,
+        "speed": 1.3
+      },
+      "collectibles": {
+        "count": 14,
+        "value": 10
+      },
+      "background_theme": "meadow"
+    },
+    {
+      "level_number": 3,
+      "name": "Level 3",
+      "is_free": true,
+      "unlock_requirement": "none",
+      "difficulty": 0.22,
+      "time_limit_seconds": 96,
+      "target_score": 300,
+      "obstacles": {
+        "count": 9,
+        "speed": 1.45
+      },
+      "collectibles": {
+        "count": 16,
+        "value": 10
+      },
+      "background_theme": "forest"
+    },
+    {
+      "level_number": 4,
+      "name": "Level 4",
+      "is_free": false,
+      "unlock_requirement": "rewarded_ad",
+      "difficulty": 0.33,
+      "time_limit_seconds": 88,
+      "target_score": 400,
+      "obstacles": {
+        "count": 11,
+        "speed": 1.6
+      },
+      "collectibles": {
+        "count": 18,
+        "value": 10
+      },
+      "background_theme": "forest"
+    },
+    {
+      "level_number": 5,
+      "name": "Level 5",
+      "is_free": false,
+      "unlock_requirement": "rewarded_ad",
+      "difficulty": 0.44,
+      "time_limit_seconds": 80,
+      "target_score": 500,
+      "obstacles": {
+        "count": 13,
+        "speed": 1.75
+      },
+      "collectibles": {
+        "count": 20,
+        "value": 10
+      },
+      "background_theme": "mountain"
+    },
+    {
+      "level_number": 6,
+      "name": "Level 6",
+      "is_free": false,
+      "unlock_requirement": "rewarded_ad",
+      "difficulty": 0.56,
+      "time_limit_seconds": 72,
+      "target_score": 600,
+      "obstacles": {
+        "count": 15,
+        "speed": 1.9
+      },
+      "collectibles": {
+        "count": 22,
+        "value": 10
+      },
+      "background_theme": "mountain"
+    },
+    {
+      "level_number": 7,
+      "name": "Level 7",
+      "is_free": false,
+      "unlock_requirement": "rewarded_ad",
+      "difficulty": 0.67,
+      "time_limit_seconds": 64,
+      "target_score": 700,
+      "obstacles": {
+        "count": 17,
+        "speed": 2.05
+      },
+      "collectibles": {
+        "count": 24,
+        "value": 10
+      },
+      "background_theme": "cave"
+    },
+    {
+      "level_number": 8,
+      "name": "Level 8",
+      "is_free": false,
+      "unlock_requirement": "rewarded_ad",
+      "difficulty": 0.78,
+      "time_limit_seconds": 56,
+      "target_score": 800,
+      "obstacles": {
+        "count": 19,
+        "speed": 2.2
+      },
+      "collectibles": {
+        "count": 26,
+        "value": 10
+      },
+      "background_theme": "cave"
+    },
+    {
+      "level_number": 9,
+      "name": "Level 9",
+      "is_free": false,
+      "unlock_requirement": "rewarded_ad",
+      "difficulty": 0.89,
+      "time_limit_seconds": 48,
+      "target_score": 900,
+      "obstacles": {
+        "count": 21,
+        "speed": 2.3499999999999996
+      },
+      "collectibles": {
+        "count": 28,
+        "value": 10
+      },
+      "background_theme": "sky"
+    },
+    {
+      "level_number": 10,
+      "name": "Level 10",
+      "is_free": false,
+      "unlock_requirement": "rewarded_ad",
+      "difficulty": 1.0,
+      "time_limit_seconds": 45,
+      "target_score": 1000,
+      "obstacles": {
+        "count": 23,
+        "speed": 2.5
+      },
+      "collectibles": {
+        "count": 30,
+        "value": 10
+      },
+      "background_theme": "sky"
+    }
+  ]
+}
